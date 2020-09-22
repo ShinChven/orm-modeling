@@ -1,7 +1,7 @@
 import {Model} from "../src/declarations";
 
 const model: Model = {
-    tableName: 'test_table1',
+    tableName: 'test_table_1',
     columns: {
         code: {
             type: 'varchar',
