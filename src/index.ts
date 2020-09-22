@@ -1,6 +1,4 @@
-import {createKnexModel} from './knex-schema-builder';
+import {createKnexModel as knexCreator} from './knex-schema-builder';
 
 
-export default {
-    createKnexModel
-};
+export const createKnexModel = knexCreator;
