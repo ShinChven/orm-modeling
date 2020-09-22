@@ -2,9 +2,10 @@
   "name": "orm-creator",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
   "scripts": {
-    "compile": "shx rm -rf lib && tsc"
+    "compile": "shx rm -rf lib && tsc",
+    "postinstall": "npm run compile"
   },
   "keywords": [],
   "author": "",
