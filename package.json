@@ -12,11 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "knex": "^0.21.5",
-    "shx": "^0.3.2"
+    "shx": "^0.3.2",
+    "@types/knex": "^0.16.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.1",
-    "@types/knex": "^0.16.1",
     "@types/mocha": "^8.0.3",
     "@types/sqlite3": "^3.1.6",
     "fs-extra": "^9.0.1",
