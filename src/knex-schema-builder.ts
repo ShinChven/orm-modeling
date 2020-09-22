@@ -14,10 +14,12 @@ export async function createKnexModel({db, model}: { db: knex, model: Model }) {
         if (!exists) {
             return db.schema.createTable(tableName, table => {
 
-                if (!columns.id) {
+                // enable autoId
+                if (!columns.id && model.autoId === true) {
                     table.increments('id');
                 }
 
+                // define each columns according to model.columns
                 Object.keys(columns).forEach(columnName => {
                     const column = columns[columnName];
                     const {type, length, datetimeOptions, floatOptions, enumType} = column;
@@ -28,6 +30,8 @@ export async function createKnexModel({db, model}: { db: knex, model: Model }) {
                             table.bigIncrements(columnName);
                         }
                     } else {
+
+                        // create column according to type
                         let builder
 
                         if (['string', 'varchar'].indexOf(type) >= 0) {
@@ -181,8 +185,6 @@ export async function createKnexModel({db, model}: { db: knex, model: Model }) {
                 }
                 // end of building table
             })
-                .then(() => console.log(`Created ${tableName} table`))
-                .catch(e => console.error(`Error creating ${tableName} table`, e));
         }
     });
 }
