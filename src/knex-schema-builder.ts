@@ -20,7 +20,7 @@ export async function createKnexModel({db, model}: { db: knex, model: Model }) {
 
                 Object.keys(columns).forEach(columnName => {
                     const column = columns[columnName];
-                    const {type, length, datetimeOptions, floatOptions} = column;
+                    const {type, length, datetimeOptions, floatOptions, enumType} = column;
                     if (column.autoIncrement) {
                         if (column.autoIncrement === true) {
                             table.increments();
@@ -66,8 +66,10 @@ export async function createKnexModel({db, model}: { db: knex, model: Model }) {
                             }
                         } else if (type === 'binary') {
                             builder = table.binary(columnName, length);
-                        } else if (['enum', 'enu'].indexOf(type) >= 0) {
-                            builder = table.enu(columnName, column.enumValues, column.enumOptions)
+                        } else if (type === 'enu') {
+                            builder = table.enu(columnName, enumType?.enumValues!, enumType?.enumOptions)
+                        } else if (type === 'enum') {
+                            builder = table.enum(columnName, enumType?.enumValues!, enumType?.enumOptions)
                         } else if (type === 'json') {
                             builder = table.json(columnName);
                         } else if (type === 'jsonb') {
@@ -115,10 +117,7 @@ export async function createKnexModel({db, model}: { db: knex, model: Model }) {
                         if (typeof column.comment === 'string') {
                             builder.comment(column.comment);
                         }
-
-
                     }
-
                 });
 
 

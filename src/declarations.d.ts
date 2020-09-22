@@ -1,7 +1,12 @@
+import {Value} from "knex";
+
 /**
  * Type for column
  */
 export interface Column {
+    /**
+     * type supported
+     */
     type: 'string' | 'varchar'
         | 'integer' | 'int'
         | 'bigInteger' | 'bigInt'
@@ -15,17 +20,65 @@ export interface Column {
         | 'jsonb'
         | 'uuid'
         | string;
+    /**
+     * enable autoIncrement
+     */
     autoIncrement?: boolean | 'bigIncrements';
+    /**
+     * column length
+     */
     length?: number;
+    /**
+     * column is nullable
+     */
     nullable?: boolean;
+    /**
+     * column is primaryKey
+     */
     primaryKey?: boolean | string;
+    /**
+     * add UNIQUE index to column
+     */
     unique?: boolean | string;
+    /**
+     * column's comment
+     */
     comment?: string;
-    defaultValue?: any;
+    /**
+     * default value
+     */
+    defaultValue?: Value;
+    /**
+     * datetime and timestamp options.
+     * used only when type is datetime or timestamp.
+     */
     datetimeOptions?: DatetimeOptions;
+    /**
+     * float options.
+     * used only when type is float or decimal
+     */
     floatOptions?: FloatOptions;
-    enumValues?: any;
-    enumOptions?: any;
+
+    enumType?: EnumType;
+}
+
+interface EnumType {
+    /**
+     * enum values for the column.
+     * used only when type is enu or enum
+     */
+    enumValues: readonly Value[];
+    /**
+     *
+     */
+    enumOptions?: EnumOptions;
+}
+
+interface EnumOptions {
+    useNative: boolean;
+    existingType?: boolean;
+    schemaName?: string;
+    enumName: string;
 }
 
 /**
@@ -64,6 +117,9 @@ export interface FloatOptions {
     scale?: number;
 }
 
+/**
+ * Index type
+ */
 export interface NamedIndex {
     columns: Array<string>;
     indexName?: string;
