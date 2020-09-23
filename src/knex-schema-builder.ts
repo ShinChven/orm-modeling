@@ -165,7 +165,7 @@ export async function createKnexModel({db, model}: { db: knex, model: Model }) {
                         }
                         if (makeDefaultNow === true) {
                             createdAtBuilder.defaultTo(db.fn.now());
-                            updatedAtBuilder.defaultTo(db.fn.now());
+                            updatedAtBuilder.defaultTo(db.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
                         }
                     } else {
                         table.timestamps(useTimestampType, makeDefaultNow);
