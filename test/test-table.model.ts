@@ -1,4 +1,4 @@
-import {Model} from "../src";
+import {Model} from "../src/knex-schema-builder";
 
 const model: Model = {
     tableName: 'test_table_1',

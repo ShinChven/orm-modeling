@@ -143,20 +143,16 @@ export interface Model {
 }
 
 
-export interface CreateKnexModelFunctionParameter {
-    db: knex;
-    model: Model;
-}
-
-export type CreateKnexModelFunction = (params: CreateKnexModelFunctionParameter) => Promise<knex<any, unknown[]>>;
-
 /**
  * create knex schema from model
- * @param db {knex} knex client
- * @param model {Model} model
- * @returns {Promise<knex>} knex client
+ * @param db knex client
+ * @param model model
+ * @returns knex client
  */
-export const createKnexModel: CreateKnexModelFunction = async ({db, model}: CreateKnexModelFunctionParameter) => {
+export const createKnexModel = async ({db, model}: {
+    db: knex,
+    model: Model
+}): Promise<knex<any, unknown[]>> => {
     const {tableName, columns, indexes} = model;
     const exists = await db.schema.hasTable(tableName);
     if (!exists) {
