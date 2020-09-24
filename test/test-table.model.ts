@@ -1,4 +1,4 @@
-import {Model} from "../src/declarations";
+import {Model} from "../src";
 
 const model: Model = {
     tableName: 'test_table_1',

@@ -1,4 +1,4 @@
-import {Value} from "knex";
+import knex, { Value } from "knex";
 
 /**
  * Type for column
@@ -8,18 +8,18 @@ export interface Column {
      * type supported
      */
     type: 'string' | 'varchar'
-        | 'integer' | 'int'
-        | 'bigInteger' | 'bigInt'
-        | 'text' | 'mediumtext' | 'longtexxt'
-        | 'float' | 'decimal'
-        | 'boolean'
-        | 'date' | 'datetime' | 'timestamp'
-        | 'binary'
-        | 'enum' | 'enu'
-        | 'json'
-        | 'jsonb'
-        | 'uuid'
-        | string;
+    | 'integer' | 'int'
+    | 'bigInteger' | 'bigInt'
+    | 'text' | 'mediumtext' | 'longtexxt'
+    | 'float' | 'decimal'
+    | 'boolean'
+    | 'date' | 'datetime' | 'timestamp'
+    | 'binary'
+    | 'enum' | 'enu'
+    | 'json'
+    | 'jsonb'
+    | 'uuid'
+    | string;
     /**
      * enable autoIncrement
      */
@@ -141,3 +141,13 @@ export interface Model {
     timestamps?: boolean | ModelTimestamps;
     indexes?: Array<Array<string> | NamedIndex>;
 }
+
+export interface CreateKnexModelFunctionParameter{
+    db: knex;
+    model: Model;
+}
+
+type CreateKnexModelFunction = (params:CreateKnexModelFunctionParameter) =>Promise<knex<any, unknown[]>>;
+
+
+
