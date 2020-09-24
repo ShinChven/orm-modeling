@@ -26,5 +26,6 @@
     "mysql2": "^2.2.5",
     "sqlite3": "^5.0.0",
     "ts-mocha": "^7.0.0"
-  }
+  },
+  "types": "lib/types.d.ts"
 }
