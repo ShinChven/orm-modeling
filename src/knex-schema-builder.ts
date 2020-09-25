@@ -1,5 +1,31 @@
 import knex, {Value} from 'knex';
 
+// noinspection JSUnusedGlobalSymbols
+export enum DataTypes {
+    STRING = 'string',
+    VARCHAR = 'varchar',
+    INTEGER = 'integer',
+    INT='int',
+    BIG_INTEGER='bigInteger',
+    BIG_INT='bigInt',
+    TEXT='text',
+    MEDIUM_TEXT='mediumtext',
+    LONG_TEXT='longtext',
+    FLOAT='float',
+    DECIMAL='decimal',
+    BOOLEAN='boolean',
+    DATE='date',
+    DATETIME='datetime',
+    TIME='time',
+    TIMESTAMP='timestamp',
+    BINARY='binary',
+    ENUM='enum',
+    ENU='enu',
+    JSON='json',
+    JSONB='jsonb',
+    UUID='uuid',
+}
+
 /**
  * Type for column
  */
@@ -7,13 +33,14 @@ export interface Column {
     /**
      * type supported
      */
-    type: 'string' | 'varchar'
+    type: DataTypes
+        | 'string' | 'varchar'
         | 'integer' | 'int'
         | 'bigInteger' | 'bigInt'
-        | 'text' | 'mediumtext' | 'longtexxt'
+        | 'text' | 'mediumtext' | 'longtext'
         | 'float' | 'decimal'
         | 'boolean'
-        | 'date' | 'datetime' | 'timestamp'
+        | 'date' | 'datetime' | 'timestamp' | 'time'
         | 'binary'
         | 'enum' | 'enu'
         | 'json'
