@@ -1,7 +1,8 @@
-import {Model} from "../src/knex-schema-builder";
+import {DataTypes, Model, ReferenceOption} from "../src/";
 
 const model: Model = {
-    tableName: 'test_table_1',
+    tableName: 'users',
+    autoId: true,
     columns: {
         code: {
             type: 'varchar',
@@ -22,7 +23,7 @@ const model: Model = {
             comment: 'your description'
         },
         enabled: {
-            type: 'boolean',
+            type: 'char',
         },
         profile: {
             type: 'json',
@@ -32,24 +33,23 @@ const model: Model = {
         },
         weight: {
             type: 'integer',
+        },
+        deptId: {
+            type: DataTypes.INTEGER,
+            unsigned: true,
+            nullable: true,
+            reference: {
+                table: 'Depts',
+                column: 'id',
+                onDelete: ReferenceOption.SET_NULL,
+            }
         }
     },
     timestamps: {
         makeDefaultNow: true,
         camelCase: true,
     },
-    indexes: [
-        ['weight', 'height'],
-        {
-            columns: ['code'],
-            indexType: 'unique',
-            indexName: 'index_user_code_u'
-        },
-        {
-            columns: ['description'],
-            indexType: 'fulltext'
-        }
-    ]
+    engine: 'InnoDB',
 }
 
 export default model;

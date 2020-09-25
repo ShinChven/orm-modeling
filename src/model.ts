@@ -27,6 +27,45 @@ export enum DataTypes {
     UUID = 'uuid',
 }
 
+// noinspection JSUnusedGlobalSymbols
+export enum ReferenceOption {
+    RESTRICT = 'RESTRICT',
+    CASCADE = 'CASCADE',
+    SET_NULL = 'SET NULL',
+    NO_ACTION = 'NO ACTION',
+}
+
+/**
+ * Create foreign reference for the column
+ */
+export interface Reference {
+    /**
+     * Reference table name
+     */
+    table: string;
+
+    /**
+     * Reference column name,
+     * use id by default if not given.
+     */
+    column?: string;
+
+    /**
+     * A default key name using the columns is used unless foreignKeyName is specified.
+     */
+    foreignKeyName?: string;
+
+    /**
+     * If true, will not create foreign key constraint. Document only.
+     */
+    softReference?: boolean;
+
+    onUpdate?: ReferenceOption;
+
+    onDelete?: ReferenceOption;
+
+}
+
 /**
  * Type for column
  */
@@ -56,6 +95,12 @@ export interface Column {
      * column length
      */
     length?: number;
+
+    /**
+     * Specifies an integer as unsigned. No-op if this is chained off of a non-integer field.
+     */
+    unsigned?: boolean;
+
     /**
      * column is nullable
      */
@@ -88,6 +133,8 @@ export interface Column {
     floatOptions?: FloatOptions;
 
     enumType?: EnumType;
+
+    reference?: Reference;
 }
 
 interface EnumType {

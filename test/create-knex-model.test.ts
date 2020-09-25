@@ -1,19 +1,33 @@
-import {createKnexModel} from "../src";
+import {createKnexModel, createKnexReference} from "../src";
 import fs from 'fs-extra';
 
 // @ts-ignore
-import testTable from './test-table.model';
+const userTable = require('./users.model').default;
+const deptsTable = require('./depts.model').default;
 
 
 describe('knex', () => {
-    const config = fs.readJSONSync('./test/config.json');
-    const knex = require('knex')({
-        client: 'mysql2',
-        connection: config.mysql,
-    });
+
     it('create model', (done) => {
-        createKnexModel({db: knex, model: testTable}).then(() => {
+        const config = fs.readJSONSync('./test/config.json');
+        const knex = require('knex')({
+            client: 'mysql2',
+            connection: config.mysql,
+        });
+
+        const createTables = async () => {
+            await createKnexModel({db: knex, model: userTable});
+            await createKnexModel({db: knex, model: deptsTable});
+            await createKnexReference({db: knex, model: userTable});
+            return Promise.resolve();
+        }
+        createTables().then(() => {
             console.log('done')
+            knex.destroy();
+            done();
+        }).catch(err=>{
+            console.error(err);
+            knex.destroy();
             done();
         });
     }).timeout(60 * 1000);

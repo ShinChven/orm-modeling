@@ -24,7 +24,7 @@ export const createKnexModel = async ({db, model}: {
             // define each columns according to model.columns
             Object.keys(columns).forEach(columnName => {
                 const column = columns[columnName];
-                const {type, length, datetimeOptions, floatOptions, enumType} = column;
+                const {type, length, datetimeOptions, floatOptions, enumType, nullable = true} = column;
                 if (column.autoIncrement) {
                     if (column.autoIncrement === true) {
                         table.increments();
@@ -40,6 +40,9 @@ export const createKnexModel = async ({db, model}: {
                         builder = table.string(columnName, length);
                     } else if (['integer', 'int'].indexOf(type) >= 0) {
                         builder = table.integer(columnName, length);
+                        if (column.unsigned) {
+                            builder.unsigned()
+                        }
                     } else if (['bigInteger', 'bigInt'].indexOf(type) >= 0) {
                         builder = table.bigInteger(columnName);
                     } else if (type === 'text') {
@@ -86,7 +89,7 @@ export const createKnexModel = async ({db, model}: {
                         builder = table.specificType(columnName, type);
                     }
 
-                    if (column.nullable === true) {
+                    if (nullable) {
                         builder.nullable()
                     } else {
                         builder.notNullable()
@@ -167,7 +170,7 @@ export const createKnexModel = async ({db, model}: {
                         }
                         if (makeDefaultNow === true) {
                             createdAtBuilder.defaultTo(db.fn.now());
-                            updatedAtBuilder.defaultTo(db.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
+                            updatedAtBuilder.defaultTo(db.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
                         }
                     } else {
                         table.timestamps(useTimestampType, makeDefaultNow);
@@ -185,6 +188,37 @@ export const createKnexModel = async ({db, model}: {
                     }
                 });
             }
+        });
+    }
+    return Promise.resolve(db);
+}
+
+export const createKnexReference = async ({db, model}: {
+    db: knex,
+    model: Model
+}): Promise<knex<any, unknown[]>> => {
+    const {tableName, columns} = model;
+    if (typeof columns === "object") {
+        await db.schema.alterTable(tableName, t => {
+            // define each columns according to model.columns
+            Object.keys(columns).forEach(columnName => {
+                const column = columns[columnName];
+                const {reference} = column;
+                if (reference) {
+                    const {table, column = 'id', softReference, onUpdate, onDelete} = reference;
+                    if (softReference !== true) {
+                        const {foreignKeyName} = reference;
+                        const _reference = `${table}.${column}`;
+                        const builder = t.foreign(columnName, foreignKeyName).references(_reference);
+                        if (onUpdate) {
+                            builder.onUpdate(onUpdate)
+                        }
+                        if (onDelete) {
+                            builder.onDelete(onDelete);
+                        }
+                    }
+                }
+            });
         });
     }
     return Promise.resolve(db);
