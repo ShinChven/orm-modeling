@@ -1,4 +1,4 @@
-import knex from 'knex';
+import Knex from 'knex';
 import {Model} from "./model";
 
 /**
@@ -8,9 +8,9 @@ import {Model} from "./model";
  * @returns knex client
  */
 export const createKnexModel = async ({db, model}: {
-    db: knex,
+    db: Knex,
     model: Model
-}): Promise<knex<any, unknown[]>> => {
+}): Promise<Knex<any, unknown[]>> => {
     const {tableName, columns, indexes} = model;
     const exists = await db.schema.hasTable(tableName);
     if (!exists) {
@@ -194,9 +194,9 @@ export const createKnexModel = async ({db, model}: {
 }
 
 export const createKnexReference = async ({db, model}: {
-    db: knex,
+    db: Knex,
     model: Model
-}): Promise<knex<any, unknown[]>> => {
+}): Promise<Knex<any, unknown[]>> => {
     const {tableName, columns} = model;
     if (typeof columns === "object") {
         await db.schema.alterTable(tableName, t => {
