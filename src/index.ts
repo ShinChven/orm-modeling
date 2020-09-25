@@ -1,1 +1,2 @@
-export {createKnexModel} from './knex-schema-builder';
+export * from './knex-schema-builder';
+export * from './model';

@@ -1,4 +1,4 @@
-import {createKnexModel} from "../src/knex-schema-builder";
+import {createKnexModel} from "../src";
 import fs from 'fs-extra';
 
 // @ts-ignore
