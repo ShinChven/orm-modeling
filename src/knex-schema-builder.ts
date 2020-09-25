@@ -5,25 +5,25 @@ export enum DataTypes {
     STRING = 'string',
     VARCHAR = 'varchar',
     INTEGER = 'integer',
-    INT='int',
-    BIG_INTEGER='bigInteger',
-    BIG_INT='bigInt',
-    TEXT='text',
-    MEDIUM_TEXT='mediumtext',
-    LONG_TEXT='longtext',
-    FLOAT='float',
-    DECIMAL='decimal',
-    BOOLEAN='boolean',
-    DATE='date',
-    DATETIME='datetime',
-    TIME='time',
-    TIMESTAMP='timestamp',
-    BINARY='binary',
-    ENUM='enum',
-    ENU='enu',
-    JSON='json',
-    JSONB='jsonb',
-    UUID='uuid',
+    INT = 'int',
+    BIG_INTEGER = 'bigInteger',
+    BIG_INT = 'bigInt',
+    TEXT = 'text',
+    MEDIUM_TEXT = 'mediumtext',
+    LONG_TEXT = 'longtext',
+    FLOAT = 'float',
+    DECIMAL = 'decimal',
+    BOOLEAN = 'boolean',
+    DATE = 'date',
+    DATETIME = 'datetime',
+    TIME = 'time',
+    TIMESTAMP = 'timestamp',
+    BINARY = 'binary',
+    ENUM = 'enum',
+    ENU = 'enu',
+    JSON = 'json',
+    JSONB = 'jsonb',
+    UUID = 'uuid',
 }
 
 /**
@@ -155,6 +155,7 @@ export interface NamedIndex {
 
 /**
  * An ORM model for knex
+ * http://knexjs.org/#Schema-Building
  */
 export interface Model {
     tableName: string;
