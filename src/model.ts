@@ -196,8 +196,19 @@ export interface FloatOptions {
  * Index type
  */
 export interface NamedIndex {
+    /**
+     * Columns to create index with, if index is to be created with one single element, then pass one element to the array.
+     */
     columns: Array<string>;
+    /**
+     * Specify name of index
+     *
+     * If not given, index will be created with default name.
+     */
     indexName?: string;
+    /**
+     * If not given, a normal index will be created.
+     */
     indexType?: 'unique' | 'fulltext' | string;
 }
 
