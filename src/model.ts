@@ -228,3 +228,67 @@ export interface Model {
     timestamps?: boolean | ModelTimestamps;
     indexes?: Array<Array<string> | NamedIndex>;
 }
+
+
+export interface CodeGenerationOptions {
+    indent?: number;
+    lineBreaker?: string;
+}
+
+
+/**
+ * Code generation tool function to convert model to TypeScript's type
+ * @param model The model to be converted
+ * @param indent
+ * @param lineBreaker
+ */
+export function toTypeScriptInterface(model: Model, {indent = 4, lineBreaker = '\n'}: CodeGenerationOptions = {}): string {
+    const {tableName, columns} = model;
+    let codes = new Array<string>();
+    const indentSpace = ((indents) => {
+        let indentStr = '';
+        for (let i = 0; i < indents; i++) {
+            indentStr += ' ';
+        }
+        return indentStr;
+    })(indent);
+    codes.push(`export interface ${tableName}{`);
+    if (typeof columns === "object") {
+        Object.keys(columns).forEach(fieldName => {
+            const field = columns[fieldName];
+            const nullable = field.nullable === true ? '?' : '';
+            const type = ((t: DataTypes | string) => {
+                switch (t.toString().toLocaleLowerCase()) {
+                    case DataTypes.STRING:
+                    case DataTypes.VARCHAR:
+                    case DataTypes.TEXT:
+                    case DataTypes.MEDIUM_TEXT:
+                    case DataTypes.LONG_TEXT:
+                    case DataTypes.UUID:
+                    case 'char':
+                        return 'string';
+                    case DataTypes.INTEGER:
+                    case DataTypes.INT:
+                    case DataTypes.BIG_INTEGER:
+                    case DataTypes.BIG_INT:
+                    case DataTypes.FLOAT:
+                    case DataTypes.DECIMAL:
+                        return 'number';
+                    case DataTypes.BOOLEAN:
+                        return 'boolean';
+                    case DataTypes.DATE:
+                    case DataTypes.DATETIME:
+                    case DataTypes.TIME:
+                    case DataTypes.TIMESTAMP:
+                        return 'Date';
+                    default:
+                        return 'any';
+                }
+            })(field.type);
+
+            codes.push(`${indentSpace}${fieldName}${nullable}: ${type};`)
+        });
+    }
+    codes.push(`}`);
+    return codes.join(lineBreaker);
+}
