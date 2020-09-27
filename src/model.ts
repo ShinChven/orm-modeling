@@ -241,6 +241,7 @@ export interface CodeGenerationOptions {
  * @param model The model to be converted
  * @param indent
  * @param lineBreaker
+ * return {string} TypeScript code in string
  */
 export function toTypeScriptInterface(model: Model, {indent = 4, lineBreaker = '\n'}: CodeGenerationOptions = {}): string {
     const {tableName, columns} = model;
