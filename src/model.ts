@@ -293,3 +293,106 @@ export function toTypeScriptInterface(model: Model, {indent = 4, lineBreaker = '
     codes.push(`}`);
     return codes.join(lineBreaker);
 }
+
+
+export interface MarkdownTableOptions {
+    tableColumnNames?: MarkdownTableColumnNames;
+    lineBreaker?: string;
+}
+
+export interface MarkdownTableColumnNames {
+    name?: string;
+    type?: string;
+    pk?: string;
+    autoIncrement?: string;
+    nullable?: string;
+    unique?: string;
+    default?: string;
+    index?: string;
+    reference?: string;
+    comment?: string;
+}
+
+export function toMarkdownTable(
+    model: Model,
+    options: MarkdownTableOptions = {}) {
+    const {
+        tableColumnNames = {
+            name: 'name',
+            type: 'type',
+            pk: 'PK',
+            autoIncrement: 'auto inc',
+            nullable: 'nullable',
+            unique: 'unique',
+            default: 'default',
+            index: 'index',
+            reference: 'reference',
+            comment: 'comment',
+        },
+        lineBreaker = '\n',
+    } = options;
+
+
+    let lines = new Array<string>();
+    if (typeof model.comment === 'string' && model.comment?.length > 0) {
+        lines.push(lineBreaker);
+        lines.push(model.comment);
+    }
+    lines.push(lineBreaker);
+    lines.push(`| ${tableColumnNames.name} | ${tableColumnNames.type} | ${tableColumnNames.pk} | ${tableColumnNames.autoIncrement} | ${tableColumnNames.nullable} | ${tableColumnNames.unique} | ${tableColumnNames.default} | ${tableColumnNames.index} | ${tableColumnNames.reference} | ${tableColumnNames.comment} |`);
+    lines.push('| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |');
+
+    if (model.autoId === true) {
+        lines.push(`| id | int unsigned | pk | auto inc |  |  |  |  |  |  |`)
+    }
+
+    if (typeof model.columns === 'object') {
+        Object.keys(model.columns).forEach(columnName => {
+            const column = model.columns[columnName];
+            const cells = new Array<string>();
+
+            cells.push(columnName);
+            cells.push(((c) => {
+                const typeParts = new Array<string>();
+                typeParts.push(c.type.toString())
+                if (c.length) {
+                    typeParts.push(`(${c.length})`);
+                } else if (c.datetimeOptions) {
+                    typeParts.push(`(${c.datetimeOptions.precision})`)
+                } else if (c.floatOptions) {
+                    typeParts.push(`(${c.floatOptions.precision},${c.floatOptions.scale})`)
+                }
+                return typeParts.join('');
+            })(column))
+            cells.push(column.primaryKey ? 'PK' : '');
+            cells.push(column.autoIncrement === true ? 'auto inc' : '');
+            cells.push(column.nullable === true ? 'null' : 'not null');
+            cells.push(column.unique === true ? 'unique' : '');
+            cells.push(column.defaultValue ? `${column.defaultValue}` : '');
+            cells.push((({indexes = []}: Model, c) => {
+                let indexType = '';
+                for (let i = 0; i < indexes.length; i++) {
+                    const index = indexes[i];
+                    if (Array.isArray(index)) {
+                        if (index.indexOf(c) >= 0) {
+                            indexType = 'index';
+                            break;
+                        }
+                    } else {
+                        if (index.columns.indexOf(c) >= 0) {
+                            indexType = index.indexType || 'index';
+                            break;
+                        }
+                    }
+                }
+                return indexType;
+            })(model, columnName)); // index
+            cells.push(column.reference ? `${column.reference.table}.${column.reference.column || 'id'}` : '');
+            cells.push(column.comment ? column.comment : '');
+
+            lines.push(`| ${cells.join(' | ')} |`);
+        });
+    }
+
+    return lines.join(lineBreaker);
+}
