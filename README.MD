@@ -1,5 +1,7 @@
 # orm-modeling 
 
+[![npm version](http://img.shields.io/npm/v/orm-modeling.svg)](https://npmjs.org/package/orm-modeling)
+
 - Create knex schema from model.
 - Generates markdown document from model.
 - Other node ORM modules will be supported in the future. 
