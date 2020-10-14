@@ -1,7 +1,7 @@
 {
   "name": "orm-modeling",
   "version": "0.0.1",
-  "description": "A node orm modeling tool.",
+  "description": "A node orm modeling tool that generates types and docs.",
   "main": "lib/index.js",
   "scripts": {
     "compile": "shx rm -rf lib && tsc",
