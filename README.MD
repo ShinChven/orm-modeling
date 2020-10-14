@@ -7,7 +7,10 @@
 ## Install
 
 ```bash
-npm install github:ShinChven/orm-creator
+# install module
+npm install orm-modeling
+# you will also need
+npm install mysql knex
 ```
 
 ## Define model
