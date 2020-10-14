@@ -7,7 +7,7 @@ import {Model} from "./model";
  * @param model model
  * @returns knex client
  */
-export const createKnexModel = async ({db, model}: {
+export const createKnexSchema = async ({db, model}: {
     db: Knex,
     model: Model
 }): Promise<Knex<any, unknown[]>> => {

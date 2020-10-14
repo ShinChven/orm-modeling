@@ -1,4 +1,4 @@
-import {createKnexModel, createKnexReference} from "../src";
+import {createKnexSchema, createKnexReference} from "../src";
 import fs from 'fs-extra';
 
 // @ts-ignore
@@ -16,8 +16,8 @@ describe('knex', () => {
         });
 
         const createTables = async () => {
-            await createKnexModel({db: knex, model: userTable});
-            await createKnexModel({db: knex, model: deptsTable});
+            await createKnexSchema({db: knex, model: userTable});
+            await createKnexSchema({db: knex, model: deptsTable});
             await createKnexReference({db: knex, model: userTable});
             return Promise.resolve();
         }

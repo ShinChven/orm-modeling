@@ -1,24 +1,31 @@
 {
-  "name": "orm-creator",
-  "version": "1.0.0",
-  "description": "",
+  "name": "orm-modeling",
+  "version": "0.0.1-alpha1",
+  "description": "A node orm modeling tool.",
   "main": "lib/index.js",
   "scripts": {
     "compile": "shx rm -rf lib && tsc",
     "postinstall": "npm run compile"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "orm",
+    "knex"
+  ],
+  "author": {
+    "url": "https://github.com/ShinChven",
+    "name": "ShinChven ZHANG",
+    "email": "shinchven@gmail.com"
+  },
   "license": "ISC",
   "dependencies": {
     "@types/knex": "^0.16.1",
-    "@types/node": "^14.11.2",
-    "knex": "^0.21.5",
+    "@types/node": "^14.11.8",
+    "knex": "^0.21.6",
     "shx": "^0.3.2",
     "typescript": "^4.0.3"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.1",
+    "@types/fs-extra": "^9.0.2",
     "@types/mocha": "^8.0.3",
     "@types/sqlite3": "^3.1.6",
     "fs-extra": "^9.0.1",
