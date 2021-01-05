@@ -17,7 +17,7 @@
     "email": "shinchven@gmail.com"
   },
   "repository": {
-    "url": "https://github.com/ShinChven/orm-creator.git"
+    "url": "https://github.com/ShinChven/orm-modeling.git"
   },
   "license": "ISC",
   "dependencies": {},
