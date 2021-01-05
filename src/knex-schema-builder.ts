@@ -41,7 +41,7 @@ export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
                     enumType,
                     nullable = createKnexSchemaOptions?.columnDefaultNullable
                 } = column;
-                if (column.autoIncrement) {
+                if (column.autoIncrement !== undefined) {
                     if (column.autoIncrement === true) {
                         table.increments();
                     } else if (column.autoIncrement === 'bigIncrements') {
@@ -111,7 +111,8 @@ export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
                         builder.notNullable()
                     }
 
-                    if (column.defaultValue) {
+                    if (column.defaultValue !== undefined) {
+                        console.log(column.defaultValue)
                         if (['timestamp'].indexOf(type) >= 0 && column.defaultValue === 'now') {
                             if (datetimeOptions && typeof datetimeOptions.precision === 'number') {
                                 builder.defaultTo(db.fn.now(datetimeOptions?.precision));
@@ -123,7 +124,7 @@ export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
                         }
                     }
 
-                    if (column.primaryKey) {
+                    if (column.primaryKey !== undefined) {
                         if (typeof column.primaryKey === 'string') {
                             builder.primary(column.primaryKey)
                         } else {
@@ -131,7 +132,7 @@ export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
                         }
                     }
 
-                    if (column.unique) {
+                    if (column.unique !== undefined) {
                         if (typeof column.unique === 'string') {
                             builder.unique(column.unique)
                         } else {

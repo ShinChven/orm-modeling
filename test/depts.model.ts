@@ -1,4 +1,4 @@
-import {DataTypes, Model, ReferenceOption} from "../src/";
+import {DataTypes, Model} from "../src/";
 
 const model: Model = {
     tableName: 'Depts',
@@ -8,6 +8,11 @@ const model: Model = {
             type: 'varchar',
             length: 20,
         },
+        age: {
+            type: DataTypes.INT,
+            defaultValue: 0,
+            nullable: true,
+        }
     },
     timestamps: {
         makeDefaultNow: true,

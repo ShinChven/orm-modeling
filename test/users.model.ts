@@ -11,6 +11,7 @@ const model: Model = {
         username: {
             type: 'varchar',
             length: 15,
+            defaultValue:'hello',
             comment: 'user use username to login',
         },
         password: {
@@ -24,12 +25,19 @@ const model: Model = {
         },
         enabled: {
             type: 'char',
+            defaultValue:'D'
         },
         profile: {
             type: 'json',
         },
         height: {
             type: 'integer',
+            defaultValue: 30,
+        },
+        accountStatus: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1,
+            comment: '收费状态， 0未收费，1收费'
         },
         weight: {
             type: 'integer',
