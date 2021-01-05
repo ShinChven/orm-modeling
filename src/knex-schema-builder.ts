@@ -112,7 +112,6 @@ export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
                     }
 
                     if (column.defaultValue !== undefined) {
-                        console.log(column.defaultValue)
                         if (['timestamp'].indexOf(type) >= 0 && column.defaultValue === 'now') {
                             if (datetimeOptions && typeof datetimeOptions.precision === 'number') {
                                 builder.defaultTo(db.fn.now(datetimeOptions?.precision));
