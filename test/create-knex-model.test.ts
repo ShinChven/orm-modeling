@@ -1,4 +1,4 @@
-import {createKnexSchema, createKnexReference} from "../src";
+import {createKnexReference, createKnexSchema} from "../src";
 import fs from 'fs-extra';
 
 // @ts-ignore
@@ -16,7 +16,11 @@ describe('knex', () => {
         });
 
         const createTables = async () => {
-            await createKnexSchema({db: knex, model: userTable});
+            await createKnexSchema({
+                db: knex, model: userTable, createKnexSchemaOptions: {
+                    columnDefaultNullable: true,
+                }
+            });
             await createKnexSchema({db: knex, model: deptsTable});
             await createKnexReference({db: knex, model: userTable});
             return Promise.resolve();
@@ -25,7 +29,7 @@ describe('knex', () => {
             console.log('done')
             knex.destroy();
             done();
-        }).catch(err=>{
+        }).catch(err => {
             console.error(err);
             knex.destroy();
             done();

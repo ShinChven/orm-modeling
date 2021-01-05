@@ -1,15 +1,24 @@
 import Knex from 'knex';
 import {Model} from "./model";
 
+export interface CreateKnexSchemaOptions {
+    /**
+     * if the column is nullable by default
+     */
+    columnDefaultNullable?: boolean,
+}
+
 /**
  * create knex schema from model
  * @param db knex client
  * @param model model
+ * @param createKnexSchemaOptions
  * @returns knex client
  */
-export const createKnexSchema = async ({db, model}: {
+export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
     db: Knex,
     model: Model
+    createKnexSchemaOptions?: CreateKnexSchemaOptions,
 }): Promise<Knex<any, unknown[]>> => {
     const {tableName, columns, indexes} = model;
     const exists = await db.schema.hasTable(tableName);
@@ -24,7 +33,14 @@ export const createKnexSchema = async ({db, model}: {
             // define each columns according to model.columns
             Object.keys(columns).forEach(columnName => {
                 const column = columns[columnName];
-                const {type, length, datetimeOptions, floatOptions, enumType, nullable = true} = column;
+                const {
+                    type,
+                    length,
+                    datetimeOptions,
+                    floatOptions,
+                    enumType,
+                    nullable = createKnexSchemaOptions?.columnDefaultNullable
+                } = column;
                 if (column.autoIncrement) {
                     if (column.autoIncrement === true) {
                         table.increments();
