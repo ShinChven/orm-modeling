@@ -6,6 +6,7 @@
 
 - Create knex schema from model.
 - Generates markdown document from model.
+- Generates TypeScript interface from model.
 - Other node ORM modules will be supported in the future. 
 
 ## Install
