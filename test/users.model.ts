@@ -3,6 +3,7 @@ import {DataTypes, Model, ReferenceOption} from "../src/";
 const model: Model = {
     tableName: 'users',
     autoId: true,
+    comment: 'User Table',
     columns: {
         code: {
             type: 'varchar',
