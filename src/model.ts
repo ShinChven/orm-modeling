@@ -292,12 +292,12 @@ export function toTypeScriptInterface(model: Model, {
 
       // add comment
       if (field.comment) {
-        codes.push(`${indentSpace}/**`)
-        codes.push(`${indentSpace} * ${field.comment}`)
-        codes.push(`${indentSpace} *`)
+        codes.push(`${indentSpace}/**`);
+        codes.push(`${indentSpace} * ${field.comment}`);
+        codes.push(`${indentSpace} */`);
       }
 
-      codes.push(`${indentSpace}${fieldName}${nullable}: ${type};`)
+      codes.push(`${indentSpace}${fieldName}${nullable}: ${type};`);
     });
   }
   codes.push(`}`);
