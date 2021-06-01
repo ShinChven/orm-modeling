@@ -290,6 +290,13 @@ export function toTypeScriptInterface(model: Model, {
         }
       })(field.type);
 
+      // add comment
+      if (field.comment) {
+        codes.push(`${indentSpace}/**`)
+        codes.push(`${indentSpace} * ${field.comment}`)
+        codes.push(`${indentSpace} *`)
+      }
+
       codes.push(`${indentSpace}${fieldName}${nullable}: ${type};`)
     });
   }
