@@ -4,6 +4,7 @@ import fs from 'fs-extra';
 // @ts-ignore
 const userTable = require('./users.model').default;
 const deptsTable = require('./depts.model').default;
+const myNumbers = require('./my_numbers.model').default;
 
 
 describe('knex', () => {
@@ -22,6 +23,7 @@ describe('knex', () => {
                 }
             });
             await createKnexSchema({db: knex, model: deptsTable});
+            await createKnexSchema({db: knex, model: myNumbers});
             await createKnexReference({db: knex, model: userTable});
             return Promise.resolve();
         }

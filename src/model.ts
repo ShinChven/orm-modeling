@@ -133,7 +133,7 @@ export interface Column {
    */
   floatOptions?: FloatOptions;
 
-  enumType?: EnumType;
+  enumType?: EnumType ;
 
   reference?: Reference;
 }
@@ -143,7 +143,7 @@ interface EnumType {
    * enum values for the column.
    * used only when type is enu or enum
    */
-  enumValues: readonly Value[];
+  enumValues: readonly Value[] | any[];
   /**
    *
    */
@@ -180,6 +180,9 @@ export interface ModelTimestamps {
  * datetime options, also work for type timestamp
  */
 export interface DatetimeOptions {
+  /**
+   * precision to allow storing milliseconds
+   */
   precision?: number;
   useTz?: boolean;
 }
@@ -189,7 +192,13 @@ export interface DatetimeOptions {
  * also work for type decimal
  */
 export interface FloatOptions {
+  /**
+   *  full length of the float/decimal
+   */
   precision?: number;
+  /**
+   *  length of the right part of the float/decimal
+   */
   scale?: number;
 }
 

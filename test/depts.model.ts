@@ -12,6 +12,11 @@ const model: Model = {
             type: DataTypes.INT,
             defaultValue: 0,
             nullable: true,
+        },
+        launch_date: {
+            type: DataTypes.DATETIME,
+            defaultValue: 'now',
+            nullable: true,
         }
     },
     timestamps: {
