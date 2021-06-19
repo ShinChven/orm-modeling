@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "compile": "shx rm -rf lib && tsc",
+    "pub": "npm publish --registry=https://registry.npmjs.org",
     "prepublish": "npm run compile"
   },
   "keywords": [
