@@ -1,5 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
-import {Value} from "knex";
+import {Knex} from "knex";
+import Value = Knex.Value;
 
 // noinspection JSUnusedGlobalSymbols
 export enum DataTypes {
