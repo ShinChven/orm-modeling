@@ -12,7 +12,8 @@ const model: Model = {
         username: {
             type: 'varchar',
             length: 15,
-            defaultValue:'hello',
+            unique: true,
+            defaultValue: 'hello',
             comment: 'user use username to login',
         },
         password: {
@@ -26,7 +27,7 @@ const model: Model = {
         },
         enabled: {
             type: 'char',
-            defaultValue:'D'
+            defaultValue: 'D'
         },
         profile: {
             type: 'json',
@@ -34,6 +35,14 @@ const model: Model = {
         height: {
             type: 'integer',
             defaultValue: 30,
+        },
+        dept_id: {
+            type: 'integer',
+            unsigned: true,
+        },
+        province_id: {
+            type: 'integer',
+            unsigned: true,
         },
         accountStatus: {
             type: DataTypes.INTEGER,
@@ -58,6 +67,7 @@ const model: Model = {
         makeDefaultNow: true,
         camelCase: true,
     },
+    indexes: [['dept_id', 'province_id'], ['deptId']],
     engine: 'InnoDB',
 }
 

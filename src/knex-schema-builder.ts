@@ -196,10 +196,11 @@ export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
             if (Array.isArray(indexes)) {
                 indexes.forEach(index => {
                     if (Array.isArray(index)) {
-                        table.index(index, `index_${index.join('_')}`)
+                        table.index(index, `${tableName}_index_${index.join('_')}`)
                     } else if (index.columns.length > 0) {
+                        const type = index.indexType ? `_${index.indexType}` : '';
                         table.index(index.columns,
-                            index.indexName || `index_${index.columns.join('_')}`,
+                            index.indexName || `${tableName}_index_${index.columns.join('_')}${type}`,
                             index.indexType);
                     }
                 });
