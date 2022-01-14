@@ -9,6 +9,9 @@ export enum DataTypes {
   INT = 'int',
   BIG_INTEGER = 'bigInteger',
   BIG_INT = 'bigInt',
+  BLOB = 'blob',
+  MEDIUM_BLOB = 'mediumblob',
+  LONG_BLOB = 'longblob',
   TEXT = 'text',
   MEDIUM_TEXT = 'mediumtext',
   LONG_TEXT = 'longtext',
@@ -77,6 +80,7 @@ export interface Column {
       | 'string' | 'varchar'
       | 'integer' | 'int'
       | 'bigInteger' | 'bigInt'
+      | 'blob' | 'mediumblob' | 'longblob'
       | 'text' | 'mediumtext' | 'longtext'
       | 'float' | 'decimal'
       | 'boolean'

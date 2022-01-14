@@ -12,7 +12,17 @@ const model: Model = {
             type: DataTypes.INT,
             defaultValue: 0,
             nullable: true,
+        },
+        data:{
+            type: DataTypes.BLOB
+        },
+        medium_data:{
+            type: DataTypes.MEDIUM_BLOB
+        },
+        long_data:{
+            type: DataTypes.LONG_BLOB
         }
+
     },
     timestamps: {
         makeDefaultNow: true,
