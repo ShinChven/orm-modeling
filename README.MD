@@ -18,21 +18,6 @@ npm install orm-modeling
 npm install mysql knex
 ```
 
-## Skip TypeScript Lib Check
-
-If you use TypeScript, you may need to `skipLibCheck`.
-
-edit your tsconfig.json:
-
-```json
-{
-  "compilerOptions": {
-    "skipLibCheck": true
-  }
-}
-```
-
-
 ## Define model
 
 - Define your model according to [types](/src/model.ts)
@@ -72,4 +57,18 @@ const markdown = toMarkdownTable(model); // returns a markdown table code in str
 const {toTypeScriptInterface} = require('orm-modeling');
 
 const interfaceStr = toTypeScriptInterface(model); // returns a TypeScript Interface code in string
+```
+
+## Skip TypeScript Lib Check
+
+If you use TypeScript and some packages' type declaration went wrong, you may need to `skipLibCheck`.
+
+edit your tsconfig.json:
+
+```json
+{
+  "compilerOptions": {
+    "skipLibCheck": true
+  }
+}
 ```
