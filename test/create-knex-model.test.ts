@@ -11,7 +11,7 @@ describe('knex', () => {
     it('create model', (done) => {
         const config = fs.readJSONSync('./test/config.json');
         const knex = require('knex')({
-            client: 'mysql',
+            client: 'mysql2',
             connection: config.mysql,
         });
 
