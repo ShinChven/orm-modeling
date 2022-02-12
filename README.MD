@@ -5,8 +5,8 @@
 [中文文档](/README.zh-CN.MD)
 
 - Create knex schema from model.
-- Generates markdown document from model.
-- Generates TypeScript interface for data entity from model.
+- Generate markdown document from model.
+- Generate TypeScript interface for data entity from model.
 - Other node ORM modules will be supported in the future. 
 
 ## Install
