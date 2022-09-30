@@ -1,6 +1,7 @@
 # orm-modeling 
 
 [![npm version](http://img.shields.io/npm/v/orm-modeling.svg)](https://npmjs.org/package/orm-modeling)
+[![npm downloads](https://img.shields.io/npm/dy/orm-modeling.svg)](https://npmjs.org/package/orm-modeling)
 
 [中文文档](/README.zh-CN.MD)
 
