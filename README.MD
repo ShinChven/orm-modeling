@@ -1,5 +1,7 @@
 # orm-modeling 
 
+A node orm modeling tool that generates types and docs.
+
 [![npm version](http://img.shields.io/npm/v/orm-modeling.svg)](https://npmjs.org/package/orm-modeling)
 [![npm downloads](https://img.shields.io/npm/dy/orm-modeling.svg)](https://npmjs.org/package/orm-modeling)
 
