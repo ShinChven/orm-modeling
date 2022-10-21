@@ -2,6 +2,7 @@ output/
 lib/
 
 test/config.json
+test/reverse/models/
 
 *.sqlite
 
