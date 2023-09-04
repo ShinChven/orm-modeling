@@ -1,18 +1,18 @@
-import {createKnexReference, createKnexSchema} from "../src";
 import fs from 'fs-extra';
+import { createKnexReference, createKnexSchema } from "../src";
 
 // @ts-ignore
 const userTable = require('./users.model').default;
 const deptsTable = require('./depts.model').default;
 
 
-describe('knex', () => {
+describe('create-knex-model', () => {
 
     it('create model', (done) => {
         const config = fs.readJSONSync('./test/config.json');
         const knex = require('knex')({
             client: 'mysql2',
-            connection: config.mysql,
+            connection: config.mysql.connection,
         });
 
         const createTables = async () => {
@@ -21,8 +21,8 @@ describe('knex', () => {
                     columnDefaultNullable: true,
                 }
             });
-            await createKnexSchema({db: knex, model: deptsTable});
-            await createKnexReference({db: knex, model: userTable});
+            await createKnexSchema({ db: knex, model: deptsTable });
+            await createKnexReference({ db: knex, model: userTable });
             return Promise.resolve();
         }
         createTables().then(() => {
