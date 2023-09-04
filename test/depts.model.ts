@@ -26,7 +26,6 @@ const model: Model = {
     },
     timestamps: {
         makeDefaultNow: true,
-        camelCase: true,
     },
 }
 

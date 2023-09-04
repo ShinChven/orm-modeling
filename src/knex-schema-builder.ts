@@ -184,6 +184,14 @@ export const createKnexSchema = async ({ db, model, createKnexSchemaOptions }: {
                             createdAtBuilder = table.dateTime('createdAt');
                             updatedAtBuilder = table.dateTime('updatedAt');
                         }
+                    }else{
+                        if (useTimestampType === true) {
+                            createdAtBuilder = table.timestamp('created_at');
+                            updatedAtBuilder = table.timestamp('updated_at');
+                        } else {
+                            createdAtBuilder = table.dateTime('created_at');
+                            updatedAtBuilder = table.dateTime('updated_at');
+                        }
                     }
                     if (makeDefaultNow === true) {
                         createdAtBuilder?.defaultTo(db.fn.now());

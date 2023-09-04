@@ -65,7 +65,6 @@ const model: Model = {
     },
     timestamps: {
         makeDefaultNow: true,
-        camelCase: true,
     },
     indexes: [['dept_id', 'province_id'], ['deptId']],
     engine: 'InnoDB',
