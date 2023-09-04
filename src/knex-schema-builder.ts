@@ -1,5 +1,5 @@
-import {Knex} from 'knex';
-import {Model} from "./model";
+import { Knex } from 'knex';
+import { Model } from "./model";
 
 export interface CreateKnexSchemaOptions {
     /**
@@ -15,12 +15,12 @@ export interface CreateKnexSchemaOptions {
  * @param createKnexSchemaOptions
  * @returns knex client
  */
-export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
+export const createKnexSchema = async ({ db, model, createKnexSchemaOptions }: {
     db: Knex,
     model: Model
     createKnexSchemaOptions?: CreateKnexSchemaOptions,
 }): Promise<Knex<any, unknown[]>> => {
-    const {tableName, columns, indexes} = model;
+    const { tableName, columns, indexes } = model;
     const exists = await db.schema.hasTable(tableName);
     if (!exists) {
         await db.schema.createTable(tableName, table => {
@@ -175,8 +175,8 @@ export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
                         makeDefaultNow,
                         camelCase,
                     } = model.timestamps;
+                    let createdAtBuilder, updatedAtBuilder;
                     if (camelCase === true) {
-                        let createdAtBuilder, updatedAtBuilder;
                         if (useTimestampType === true) {
                             createdAtBuilder = table.timestamp('createdAt');
                             updatedAtBuilder = table.timestamp('updatedAt');
@@ -184,12 +184,10 @@ export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
                             createdAtBuilder = table.dateTime('createdAt');
                             updatedAtBuilder = table.dateTime('updatedAt');
                         }
-                        if (makeDefaultNow === true) {
-                            createdAtBuilder.defaultTo(db.fn.now());
-                            updatedAtBuilder.defaultTo(db.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-                        }
-                    } else {
-                        table.timestamps(useTimestampType, makeDefaultNow);
+                    }
+                    if (makeDefaultNow === true) {
+                        createdAtBuilder?.defaultTo(db.fn.now());
+                        updatedAtBuilder?.defaultTo(db.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
                     }
                 }
             }
@@ -210,21 +208,21 @@ export const createKnexSchema = async ({db, model, createKnexSchemaOptions}: {
     return Promise.resolve(db);
 }
 
-export const createKnexReference = async ({db, model}: {
+export const createKnexReference = async ({ db, model }: {
     db: Knex,
     model: Model
 }): Promise<Knex<any, unknown[]>> => {
-    const {tableName, columns} = model;
+    const { tableName, columns } = model;
     if (typeof columns === "object") {
         await db.schema.alterTable(tableName, t => {
             // define each columns according to model.columns
             Object.keys(columns).forEach(columnName => {
                 const column = columns[columnName];
-                const {reference} = column;
+                const { reference } = column;
                 if (reference) {
-                    const {table, column = 'id', softReference, onUpdate, onDelete} = reference;
+                    const { table, column = 'id', softReference, onUpdate, onDelete } = reference;
                     if (softReference !== true) {
-                        const {foreignKeyName} = reference;
+                        const { foreignKeyName } = reference;
                         const _reference = `${table}.${column}`;
                         const builder = t.foreign(columnName, foreignKeyName).references(_reference);
                         if (onUpdate) {
