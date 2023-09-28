@@ -19,6 +19,26 @@ npm install orm-modeling
 npm install knex mysql
 ```
 
+## 简单上手：创建 Knex Schema
+
+```JavaScript
+const {createKnexSchema} = require('orm-modeling');
+const Knex = require('knex');
+
+// 创建Knex实例
+const db = Knex();
+// 定义您的模型
+const model = {
+  // ... 模型属性在此定义
+}; 
+
+createKnexSchema({db, model}).then(db=>{
+   // 该函数返回Knex实例
+}); 
+```
+
+要获取完整示例，请参阅此 [Knex模式创建示例](/test/create-knex-model.test.ts)。
+
 ## 模型定义
 
 - 模型应根据提供的TypeScript [类型](/src/model.ts) 进行定义。借助于TypeScript，您的IDE将能够为您提供有用的提示和指示，以便您定义模型。
@@ -129,26 +149,6 @@ export default model;
 这些属性中的每一个都允许您微调数据库列的行为和特性，提供了在定义数据模型时的高度灵活性。
 
 通过遵循此指南，您可以定义准确表示数据库表的复杂模型。请记住，orm-modeling 的强大之处在于它能够利用TypeScript的特性，在您定义模型时提供自动完成和类型检查的功能。
-
-## 创建Knex模式
-
-```JavaScript
-const {createKnexSchema} = require('orm-modeling');
-const Knex = require('knex');
-
-// 创建Knex实例
-const db = Knex();
-// 定义您的模型
-const model = {
-  // ... 模型属性在此定义
-}; 
-
-createKnexSchema({db, model}).then(db=>{
-   // 该函数返回Knex实例
-}); 
-```
-
-要获取完整示例，请参阅此 [Knex模式创建示例](/test/create-knex-model.test.ts)。
 
 ## 生成Markdown文档
 
