@@ -1,72 +1,173 @@
 # orm-modeling 
 
-A node orm modeling tool that generates types and docs.
+orm-modeling is a robust Node.js ORM tool designed with TypeScript. It enables you to define your database schemas using JavaScript objects, with the added benefit of IDE autocompletion and type-checking for model definitions. Built on the Knex query builder, it offers compatibility with a variety of database engines.
 
-[![npm version](http://img.shields.io/npm/v/orm-modeling.svg)](https://npmjs.org/package/orm-modeling)
-[![npm downloads](https://img.shields.io/npm/dy/orm-modeling.svg)](https://npmjs.org/package/orm-modeling)
+[![npm version](http://img.shields.io/npm/v/orm-modeling.svg)](https://npmjs.org/package/orm-modeling) [![npm downloads](https://img.shields.io/npm/dy/orm-modeling.svg)](https://npmjs.org/package/orm-modeling) [![Documentation](https://img.shields.io/badge/documentation-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3-blue)](/README.zh-CN.MD)
 
-[中文文档](/README.zh-CN.MD)
+Key Features:
+- Define Knex schemas from models with TypeScript's autocompletion and type-checking capabilities.
+- Generate Markdown documentation from models.
+- Generate TypeScript interfaces for data entities from models.
+- Future updates will add support for other Node.js ORM modules.
 
-- Create knex schema from model.
-- Generate markdown document from model.
-- Generate TypeScript interface for data entity from model.
-- Other node ORM modules will be supported in the future. 
-
-## Install
+## Installation
 
 ```bash
-# install module
+# To install orm-modeling
 npm install orm-modeling
-# you will also need
-npm install mysql knex
+# You will also need to install Knex and your chosen database engine, for example MySQL
+npm install knex mysql
 ```
 
-## Define model
+## Model Definition
 
-- Define your model according to [types](/src/model.ts)
-- See [example](/test/users.model.ts)
+- Models should be defined according to the TypeScript [types](/src/model.ts) provided. Thanks to TypeScript, your IDE will be able to provide useful prompts and indications as you define your models.
+- Refer to this TypeScript [example](/test/users.model.ts) for a model definition.
 
-## Create knex schema
+In orm-modeling, a model is a representation of a database table and its associated attributes. Models are defined as JavaScript objects, taking advantage of TypeScript's autocompletion and type-checking capabilities to ensure correct model definitions.
+
+Here's an example of how you can define a model for a 'files' table:
+
+```ts
+import {DataTypes, Model} from 'orm-modeling';
+
+/**
+ * File model
+ */
+const model: Model = {
+  tableName: 'files',
+  autoId: true,
+  timestamps: {
+    makeDefaultNow: true
+  },
+  comment: 'File archives',
+  indexes: [],
+  columns: {
+    name: {
+      type: DataTypes.VARCHAR,
+      length: 500,
+      unique: true,
+      nullable: false,
+      comment: 'File name',
+    },
+    original_filename: {
+      type: DataTypes.VARCHAR,
+      length: 2000,
+      nullable: false,
+      comment: 'Original name'
+    },
+    mimetype: {
+      type: DataTypes.VARCHAR,
+      length: 256,
+      nullable: false,
+      comment: 'File type',
+    },
+    size: {
+      type: DataTypes.BIG_INTEGER,
+      nullable: false,
+      comment: 'File size',
+    },
+    data: {
+      type: DataTypes.LONG_BLOB,
+      comment: 'File data',
+    },
+    creator_id: {
+      type: DataTypes.INTEGER,
+      unsigned: true,
+      nullable: false,
+      comment: 'Creator id, admin user.'
+    },
+    // ... columns go here
+  }
+};
+
+export default model;
+```
+
+In this example, the `Model` object has several properties:
+
+- `tableName`: The name of the table in the database.
+- `autoId`: If set to true, an 'id' column of type 'integer' will be automatically added to the model.
+- `timestamps`: If set to true, 'created_at' and 'updated_at' columns will be automatically added to the model. You can also pass an object with more specific configuration options.
+- `comment`: A comment for the table.
+- `indexes`: An array defining the indexes for the table.
+- `columns`: An object defining the columns of the table. Each key in this object represents a column in the table, and the value is an object that defines the properties of the column.
+
+The `columns` property is an object where each key-value pair represents a column in the table. The key is the column name, and the value is an object that defines the column properties. 
+
+Let's delve into the `Column` interface. Each property in the `Column` interface represents a configuration option for a column in a database table.
+
+- `type`: This property defines the data type of the column. It can be one of the values from the `DataTypes` enum, or a string representing a valid data type. The `DataTypes` enum includes common data types such as 'string', 'integer', 'date', 'boolean', etc.
+
+- `autoIncrement`: If set to `true` or 'bigIncrements', the column will automatically increment its value for each new row. This is typically used for primary key columns.
+
+- `length`: This property specifies the maximum length of the column. It's applicable for string data types.
+
+- `unsigned`: If set to `true`, the column will be set as an unsigned integer. This means it can only hold non-negative numbers. This property only applies to integer fields.
+
+- `nullable`: If set to `true`, the column will allow null values. If not specified or set to `false`, the column will not accept null values.
+
+- `primaryKey`: If set to `true` or a string, the column will be set as the primary key of the table. If the value is a string, it will be used as the name of the primary key constraint.
+
+- `unique`: If set to `true` or a string, a unique constraint will be added to this column. If the value is a string, it will be used as the name of the unique constraint.
+
+- `comment`: This property allows you to add a comment to the column.
+
+- `defaultValue`: This property allows you to set a default value for the column.
+
+- `datetimeOptions`: This property allows you to set options for 'datetime' and 'timestamp' column types. It should be an object of type `DatetimeOptions`, which can have properties like `precision` and `useTz` (for timezone).
+
+- `floatOptions`: This property allows you to set options for 'float' and 'decimal' column types. It should be an object of type `FloatOptions`, which can have properties like `precision` and `scale`.
+
+- `enumType`: This property allows you to set options for 'enum' or 'enu' column types. It should be an object of type `EnumType`, which includes `enumValues` (an array of possible values for the enum) and `enumOptions` (additional options for the enum).
+
+- `reference`: This property allows you to add a foreign key reference to the column. It should be an object of type `Reference`, which includes properties like `table` (the referenced table), `column` (the referenced column), and `foreignKeyName` (the name of the foreign key constraint).
+
+Each of these properties allows you to fine-tune the behavior and characteristics of your database columns, providing a high degree of flexibility in defining your data models.
+
+By following this guide, you can define complex models that accurately represent your database tables. Remember, the power of orm-modeling lies in its ability to leverage TypeScript's features, providing you with autocompletion and type-checking capabilities as you define your models.
+
+## Creating a Knex Schema
 
 ```JavaScript
 const {createKnexSchema} = require('orm-modeling');
 const Knex = require('knex');
 
-// knex instance
+// Create a Knex instance
 const db = Knex();
-// your model
+// Define your model
 const model = {
-  // ... your model attributes
+  // ... model attributes go here
 }; 
 
 createKnexSchema({db, model}).then(db=>{
-   //  returns the knex instance
+   //  The function returns the Knex instance
 }); 
 ```
 
-See [example](/test/create-knex-model.test.ts).
+For a complete example, refer to this [Knex schema creation example](/test/create-knex-model.test.ts).
 
-## Generate markdown document
+## Generating Markdown Documentation
 
 ```JavaScript
 const {toMarkdownTable} = require('orm-modeling');
 
-const markdown = toMarkdownTable(model); // returns a markdown table code in string
+// This function returns a Markdown table as a string
+const markdown = toMarkdownTable(model); 
 ```
 
-## Generate TypeScript interface
+## Generating TypeScript Interfaces
 
 ```JavaScript
 const {toTypeScriptInterface} = require('orm-modeling');
 
-const interfaceStr = toTypeScriptInterface(model); // returns a TypeScript Interface code in string
+// This function returns a TypeScript Interface as a string
+const interfaceStr = toTypeScriptInterface(model); 
 ```
 
-## Skip TypeScript Lib Check
+## Skipping TypeScript Library Checks
 
-If you use TypeScript and some packages' type declaration went wrong, you may need to `skipLibCheck`.
-
-edit your tsconfig.json:
+For TypeScript users, if you encounter issues with the type declarations of certain packages, you may need to enable `skipLibCheck` in your tsconfig.json:
 
 ```json
 {
