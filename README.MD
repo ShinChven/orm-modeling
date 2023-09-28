@@ -149,21 +149,63 @@ For a complete example, refer to this [Knex schema creation example](/test/creat
 
 ## Generating Markdown Documentation
 
-```JavaScript
-const {toMarkdownTable} = require('orm-modeling');
+1. Import the `toMarkdownTable` function from the `orm-modeling` library.
 
-// This function returns a Markdown table as a string
-const markdown = toMarkdownTable(model); 
+```TypeScript
+import { toMarkdownTable } from 'orm-modeling';
+```
+
+2. Define your model object as per the `Model` interface.
+
+```TypeScript
+const model: Model = {
+  // ... model definition goes here
+};
+```
+
+3. Call the `toMarkdownTable` function with your model object. This will return a string containing a Markdown table.
+
+```TypeScript
+const markdown: string = toMarkdownTable(model);
+```
+
+4. You can then write this string to a Markdown file, or use it however you like.
+
+```TypeScript
+import { writeFileSync } from 'fs';
+writeFileSync('model.md', markdown);
 ```
 
 ## Generating TypeScript Interfaces
 
-```JavaScript
-const {toTypeScriptInterface} = require('orm-modeling');
+1. Import the `toTypeScriptInterface` function from the `orm-modeling` library.
 
-// This function returns a TypeScript Interface as a string
-const interfaceStr = toTypeScriptInterface(model); 
+```TypeScript
+import { toTypeScriptInterface } from 'orm-modeling';
 ```
+
+2. Define your model object as per the `Model` interface.
+
+```TypeScript
+const model: Model = {
+  // ... model definition goes here
+};
+```
+
+3. Call the `toTypeScriptInterface` function with your model object. This will return a string containing a TypeScript interface.
+
+```TypeScript
+const interfaceStr: string = toTypeScriptInterface(model);
+```
+
+4. You can then write this string to a TypeScript file, or use it however you like.
+
+```TypeScript
+import { writeFileSync } from 'fs';
+writeFileSync('model.ts', interfaceStr);
+```
+
+This will generate a TypeScript interface that describes the structure of a row in the table that your model represents. This can be very useful when you're writing TypeScript code that interacts with this table, as it allows your editor to provide autocompletion and type checking.
 
 ## Skipping TypeScript Library Checks
 
