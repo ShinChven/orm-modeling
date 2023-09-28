@@ -19,6 +19,27 @@ npm install orm-modeling
 npm install knex mysql
 ```
 
+## Get Started: Creating a Knex Schema
+
+What you need to do is to create a Knex instance and define your model. Then, pass these to the `createKnexSchema` function, which will return a Knex instance with the schema applied.
+
+```TypeScript
+import { createKnexSchema, Model } from 'orm-modeling';
+import Knex, { Knex as KnexType } from 'knex';
+
+// Create a Knex instance
+const db: KnexType = Knex();
+
+// Define your model
+const model: Model = {
+  // ... model attributes go here
+}; 
+
+createKnexSchema({db, model}).then((db: KnexType) => {
+   // The function returns the Knex instance
+}); 
+```
+
 ## Model Definition
 
 - Models should be defined according to the TypeScript [types](/src/model.ts) provided. Thanks to TypeScript, your IDE will be able to provide useful prompts and indications as you define your models.
@@ -127,23 +148,7 @@ Each of these properties allows you to fine-tune the behavior and characteristic
 
 By following this guide, you can define complex models that accurately represent your database tables. Remember, the power of orm-modeling lies in its ability to leverage TypeScript's features, providing you with autocompletion and type-checking capabilities as you define your models.
 
-## Creating a Knex Schema
 
-```JavaScript
-const {createKnexSchema} = require('orm-modeling');
-const Knex = require('knex');
-
-// Create a Knex instance
-const db = Knex();
-// Define your model
-const model = {
-  // ... model attributes go here
-}; 
-
-createKnexSchema({db, model}).then(db=>{
-   //  The function returns the Knex instance
-}); 
-```
 
 For a complete example, refer to this [Knex schema creation example](/test/create-knex-model.test.ts).
 
