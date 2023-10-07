@@ -1,6 +1,6 @@
 {
   "name": "orm-modeling",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A node orm modeling tool that generates types and docs.",
   "main": "lib/index.js",
   "scripts": {
@@ -38,7 +38,5 @@
     "ts-mocha": "^10.0.0",
     "typescript": "^5.2.2"
   },
-  "dependencies": {
-
-  }
+  "dependencies": {}
 }
