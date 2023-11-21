@@ -2,7 +2,7 @@
 
 orm-modeling is a robust Node.js ORM tool designed with TypeScript. It enables you to define your database schemas using JavaScript objects, with the added benefit of IDE autocompletion and type-checking for model definitions. Built on the Knex query builder, it offers compatibility with a variety of database engines.
 
-[![npm version](http://img.shields.io/npm/v/orm-modeling.svg)](https://npmjs.org/package/orm-modeling) [![npm downloads](https://img.shields.io/npm/dy/orm-modeling.svg)](https://npmjs.org/package/orm-modeling) [![Documentation](https://img.shields.io/badge/documentation-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3-blue)](/README.zh-CN.MD)
+[![npm version](http://img.shields.io/npm/v/orm-modeling.svg)](https://npmjs.org/package/orm-modeling) [![npm downloads](https://img.shields.io/npm/dy/orm-modeling.svg)](https://npmjs.org/package/orm-modeling) [![Documentation](https://img.shields.io/badge/documentation-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3-blue)](/README.zh-CN.MD) [![ORM-Modeling Wizard(GPT)](https://img.shields.io/badge/ORM--Modeling%20Wizard(GPT)-OpenAI%20Chat-blue?style=flat&logo=openai)](https://chat.openai.com/g/g-y8k0ER5Os-orm-modeling-wizard/)
 
 Key Features:
 - Define Knex schemas from models with TypeScript's autocompletion and type-checking capabilities.
