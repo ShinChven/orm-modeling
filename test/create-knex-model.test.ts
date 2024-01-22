@@ -1,19 +1,12 @@
-import {createKnexReference, createKnexSchema} from "../src";
 import fs from 'fs-extra';
-import chai from "chai";
-import { expect } from 'chai';
-import chaiAsPromised from 'chai-as-promised';
+import { createKnexReference, createKnexSchema } from "../src";
 
 // @ts-ignore
 const userTable = require('./users.model').default;
 const deptsTable = require('./depts.model').default;
 
-//Enable chai to use promises for assertions
-chai.use(chaiAsPromised);
-
-describe("Test Suite", function() {
-    it("Tests Knex Schema & Reference Creation", async function() {
-        const config = fs.readJSONSync('./test/config.json');
+(async () => {
+    const config = fs.readJSONSync('./test/config.json');
         const knex = require('knex')({
             client: 'mysql2',
             connection: config.mysql.connection,
@@ -31,8 +24,13 @@ describe("Test Suite", function() {
         await createKnexReference({db: knex, model: userTable});
 
         knex.destroy();
-
-        //If the code reaches this point without throwing any error then the test has passed.
-        expect(true).to.equal(true);
-    });
+})().then(() => {
+    
+    console.log('Test passed');
+    process.exit(0);
+})
+.catch(err => {
+    console.error(err);
+    process.exit(1);
 });
+

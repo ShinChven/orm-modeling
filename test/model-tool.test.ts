@@ -1,17 +1,17 @@
-import {toMarkdownTable, toTypeScriptInterface} from "../src";
+import { toMarkdownTable, toTypeScriptInterface } from "../src";
 
 const usersTable = require('./users.model').default;
 
+(async () => {
 
-describe('model-tool', () => {
+    console.log(toTypeScriptInterface(usersTable));
+    console.log(`### ${usersTable.tableName || ''} ${usersTable.comment || ''}\n\n${toMarkdownTable(usersTable)}`);
 
-    it('to TypeScript interface', (done) => {
-        console.log(toTypeScriptInterface(usersTable));
-        done()
-    }).timeout(60 * 1000);
-
-    it('to markdown table', (done) => {
-        console.log(`### ${usersTable.tableName||''} ${usersTable.comment||''}\n\n${toMarkdownTable(usersTable)}`);
-        done()
-    }).timeout(60 * 1000);
+})().then(() => {
+    console.log('Test passed');
+    process.exit(0);
 })
+    .catch(err => {
+        console.error(err);
+        process.exit(1);
+    });

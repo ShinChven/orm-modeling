@@ -22,21 +22,14 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "chai": "^4.3.8",
-    "chai-as-promised": "^7.1.1",
-    "@types/chai": "^4.3.5",
-    "@types/chai-as-promised": "^7.1.5",
-    "@types/fs-extra": "^11.0.1",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^20.5.9",
-    "@types/sqlite3": "^3.1.8",
-    "fs-extra": "^11.1.1",
-    "knex": "^2.5.1",
-    "mocha": "^10.2.0",
-    "mysql2": "^2.3.3",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.11.5",
+    "@types/sqlite3": "^3.1.11",
+    "fs-extra": "^11.2.0",
+    "knex": "^3.1.0",
+    "mysql2": "^3.7.1",
     "shx": "^0.3.4",
-    "ts-mocha": "^10.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   },
   "dependencies": {}
 }
